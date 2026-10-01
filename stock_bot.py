@@ -10,74 +10,12 @@ TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 STATE_FILE = Path("state.json")
 
-PRODUCTS = [
-    {
-        "retailer": "Mighty Ape",
-        "name": "Pokémon TCG: 30th Celebration - Booster Pack",
-        "url": "https://www.mightyape.co.nz/mn/buy/kogan-international-pokemon-tcg-30th-celebration-booster-pack-41205473/",
-        "rules": "mightyape",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration Elite Trainer Box",
-        "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-elite-trainer-box-43818587/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration Knock Out Collection",
-        "url": "https://www.kmart.co.nz/product/pokemon-trading-card-game%3A-30th-celebration-knock-out-collection-43818556/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration ex Box",
-        "url": "https://www.kmart.co.nz/product/pokemon-ex-box-43818587/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration Poster Collection",
-        "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-poster-collection-43818556/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection",
-        "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-tech-sticker-collection-43818556/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "Kmart NZ",
-        "name": "Pokémon TCG: 30th Celebration Binder Collection",
-        "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-binder-collection-43818556/",
-        "rules": "kmart",
-    },
-    {
-        "retailer": "The Warehouse",
-        "name": "Pokémon 30th Celebration ex Box",
-        "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-ex-box---1-per-customer/R3099225.html",
-        "rules": "warehouse",
-    },
-    {
-        "retailer": "The Warehouse",
-        "name": "Pokémon 30th Celebration Knock Out Collection",
-        "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-knock-out-collection---1-per-customer/R3099329.html",
-        "rules": "warehouse",
-    },
-    {
-        "retailer": "The Warehouse",
-        "name": "Pokémon 30th Celebration Elite Trainer Box",
-        "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-elite-trainer-box---1-per-customer/R3099331.html",
-        "rules": "warehouse",
-    },
-    {
-        "retailer": "Mighty Ape",
-        "name": "Pokémon TCG Mega 30th Celebration M6a Japanese Booster Box",
-        "url": "https://www.mightyape.co.nz/mn/buy/pokebox-australia-mega-30th-celebration-m6a-booster-box-japanese-pokemon-tcg-10395841724701/",
-        "rules": "mightyape",
-    },
-]
+PRODUCTS_FILE = Path("products.json")
+
+def load_products():
+    return json.loads(PRODUCTS_FILE.read_text())
+    
+PRODUCTS = load_products()
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; PokemonStockAlert/1.0; +https://github.com/)"
