@@ -1,4 +1,8 @@
 {
+  "https://pokestash.co.nz/products/30th-celebration-2-pack-blister-704148": {
+    "available": false,
+    "price": "$20.99"
+  },
   "https://pokestash.co.nz/products/30th-celebration-battle-deck-espeon-ex-704187": {
     "available": false,
     "price": "$71.82"
@@ -70,5 +74,9 @@
   "https://pokestash.co.nz/products/30th-celebration-ultra-premium-collection-night-704191": {
     "available": false,
     "price": "$1,32"
+  },
+  "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-elite-trainer-box": {
+    "available": false,
+    "price": null
   }
 }
