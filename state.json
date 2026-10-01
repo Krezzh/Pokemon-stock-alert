@@ -7,6 +7,30 @@
     "available": false,
     "price": "$50.00"
   },
+  "https://ocare.co.nz/ja/products/pokemon-tcg-30th-celebration-binder-collection": {
+    "available": false,
+    "price": "$80.00 USD"
+  },
+  "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-elite-trainer-box": {
+    "available": false,
+    "price": "$172.00 USD"
+  },
+  "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection": {
+    "available": false,
+    "price": "$35.00 USD"
+  },
+  "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-poster-collection": {
+    "available": false,
+    "price": "$58.00 USD"
+  },
+  "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-sylveon-ex-box-greninja-ex-box": {
+    "available": false,
+    "price": "$80.00 USD"
+  },
+  "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-tech-sticker-collection": {
+    "available": false,
+    "price": "$52.00 USD"
+  },
   "https://pokestash.co.nz/products/30th-celebration-2-pack-blister-704148": {
     "available": false,
     "price": "$20.99"
@@ -163,6 +187,18 @@
     "available": false,
     "price": "$1,32"
   },
+  "https://toytime.co.nz/products/pokemon-tcg-30th-celebration-elite-trainer-box-pre-order": {
+    "available": false,
+    "price": "$150.00"
+  },
+  "https://toytime.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection-pre-order-copy": {
+    "available": false,
+    "price": "$115.00"
+  },
+  "https://toytime.co.nz/products/pokemon-tcg-celebration-ex-box-pre-order-copy": {
+    "available": false,
+    "price": "$40.00"
+  },
   "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-binder-collection-7064591": {
     "available": false,
     "price": null
@@ -190,5 +226,17 @@
   "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-elite-trainer-box": {
     "available": false,
     "price": null
+  },
+  "https://www.metalife.co.nz/en-au/collections/trading-card-games/products/pokemon-tcg-30th-anniversary-celebration-ex-box": {
+    "available": false,
+    "price": "$100"
+  },
+  "https://www.metalife.co.nz/en-au/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle": {
+    "available": false,
+    "price": "$100"
+  },
+  "https://www.metalife.co.nz/en-au/products/pokemon-tcg-30th-anniversary-celebration-elite-trainer-box": {
+    "available": false,
+    "price": "$100"
   }
 }
