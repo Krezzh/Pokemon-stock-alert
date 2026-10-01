@@ -334,5 +334,53 @@
     "name": "Pokémon TCG: 30th Celebration Mini Tin - Greninja",
     "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-greninja-704185",
     "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Elite Trainer Box",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-elite-trainer-box-7064540",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Poster Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-poster-collection-7064538",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Knock Out Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-knock-out-collection-7064537",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Binder Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-binder-collection-7064591",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Tech Sticker Collection - Assorted",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-tech-sticker-collection-assorted-7064539",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Sylveon/Greninja EX Box, Assorted",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-sylveon-greninja-ex-box-assorted-7064536",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Game Corner NZ",
+    "name": "Pokémon TCG 30th Celebration Elite Trainer Box",
+    "url": "https://gamecorner.co.nz/collections/pokemon-tcg-30th-celebration/products/pokemon-tcg-30th-celebration-elite-trainer-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Game Corner NZ",
+    "name": "Pokémon TCG 30th Celebration Knock Out Collection",
+    "url": "https://gamecorner.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection",
+    "rules": "generic"
   }
 ]
