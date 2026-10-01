@@ -101,6 +101,18 @@ def detect(product, soup):
             return False, extract_price(soup, text)
         return (("add to cart" in lower or "add to bag" in lower or "buy now" in lower),
                 extract_price(soup, text))
+        
+    if rules == "jbhifi":
+        if "out of stock" in lower or "sold out" in lower:
+            return False, extract_price(soup, text)
+
+        return (
+            "add to cart" in lower
+            or "add to bag" in lower
+            or "buy now" in lower
+            or "in stock" in lower,
+            extract_price(soup, text)
+        )
 
     return False, extract_price(soup, text)
 
