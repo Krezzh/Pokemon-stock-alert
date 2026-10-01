@@ -309,5 +309,45 @@
   },
   "https://www.mightyape.co.nz/mn/buy/pokebox-australia-pokemon-tcg-mega-evolution-ascended-heroes-focused-fighters-box-10319213429021/": {
     "access_status": "BLOCKED"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-gengar": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$19.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-morpeko": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$19.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-pikachu": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$19.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-umbreon": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$19.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-espeon": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$31.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-morpeko": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$31.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-pikachu": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$31.99"
+  },
+  "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-vulpix": {
+    "access_status": "OK",
+    "available": true,
+    "price": "$31.99"
   }
 }
