@@ -161,6 +161,28 @@ def detect(product, soup):
             or "in stock" in lower
         ), extract_price(soup, text)
 
+    if rules == "keyword":
+        # Used for retailer category/watch pages when the exact product URL
+        # has not been published yet. Only report available when the target
+        # product name appears near a purchase/preorder signal.
+        keywords = [k.lower() for k in product.get("keywords", [])]
+        purchase_signals = (
+            "add to cart", "add to bag", "buy now", "preorder",
+            "pre-order", "in stock", "available"
+        )
+        for keyword in keywords:
+            start = 0
+            while True:
+                idx = lower.find(keyword, start)
+                if idx == -1:
+                    break
+                window = lower[max(0, idx - 700): idx + 700]
+                if any(signal in window for signal in purchase_signals):
+                    if "sold out" not in window and "out of stock" not in window:
+                        return True, extract_price(soup, text)
+                start = idx + len(keyword)
+        return False, extract_price(soup, text)
+
     # Generic Shopify-style pages such as PokeStash.
     if rules == "generic":
         if "sold out" in lower or "out of stock" in lower:
@@ -363,3 +385,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+                    
