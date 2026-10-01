@@ -9,7 +9,7 @@
   },
   "https://ocare.co.nz/ja/products/pokemon-tcg-30th-celebration-binder-collection": {
     "available": false,
-    "price": "$80.00 USD"
+    "price": "$81.00 USD"
   },
   "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-elite-trainer-box": {
     "available": false,
@@ -224,6 +224,10 @@
     "price": null
   },
   "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-elite-trainer-box": {
+    "available": false,
+    "price": null
+  },
+  "https://www.jbhifi.com.au/collections/collectibles-merchandise/pokemon-trading-cards": {
     "available": false,
     "price": null
   },
