@@ -293,6 +293,16 @@ def main():
 
             if status == "BLOCKED":
                 counts["blocked"] += 1
+
+                # For Focused Fighters watch entries, remember that the page
+                # was blocked so we can alert if it becomes reachable later.
+                if product.get("watch_reachability"):
+                    previous_access = state.get(key, {}).get("access_status")
+                    new_state[key] = {
+                        **state.get(key, {}),
+                        "access_status": "BLOCKED",
+                    }
+
                 print(
                     f"BLOCKED {product['retailer']} | "
                     f"{product['name']} | HTTP {response.status_code}"
@@ -336,11 +346,35 @@ def main():
             )
             continue
 
-        previous = state.get(key, {}).get("available")
+        previous_entry = state.get(key, {})
+        previous = previous_entry.get("available")
+        previous_access = previous_entry.get("access_status")
         new_state[key] = {
             "available": available,
             "price": price,
+            "access_status": "OK",
         }
+
+        # If a Focused Fighters page was previously blocked but is now
+        # reachable, alert immediately even if the product is still shown
+        # as out of stock. This tells us the retailer page has gone live
+        # enough for manual checking.
+        if (
+            product.get("watch_reachability")
+            and previous_access == "BLOCKED"
+        ):
+            message = (
+                "🚨 FOCUSED FIGHTERS PAGE IS NOW REACHABLE\n\n"
+                f"🏪 {product['retailer']}\n"
+                f"📦 {product['name']}\n\n"
+                f"🛒 {product['url']}"
+            )
+
+            try:
+                telegram(message)
+                print(f"ACCESS ALERT: {product['name']}")
+            except Exception as e:
+                print(f"TELEGRAM ERROR: {e}")
 
         if available:
             counts["available"] += 1
@@ -385,4 +419,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-                    
