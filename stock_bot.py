@@ -256,16 +256,27 @@ def fetch_page(session, url):
     raise last_error or RuntimeError("Unknown request error")
 
 
-def telegram(message):
+def telegram(message, button_url=None, button_text="🛒 BUY NOW"):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "disable_web_page_preview": False,
+    }
+
+    # Add a one-tap button that opens the retailer product page.
+    # The purchase is still confirmed manually by the user.
+    if button_url:
+        payload["reply_markup"] = {
+            "inline_keyboard": [[
+                {"text": button_text, "url": button_url}
+            ]]
+        }
 
     r = requests.post(
         url,
-        json={
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": message,
-            "disable_web_page_preview": False,
-        },
+        json=payload,
         timeout=30,
     )
     r.raise_for_status()
@@ -371,7 +382,11 @@ def main():
             )
 
             try:
-                telegram(message)
+                telegram(
+                    message,
+                    button_url=product["url"],
+                    button_text="🔎 CHECK NOW",
+                )
                 print(f"ACCESS ALERT: {product['name']}")
             except Exception as e:
                 print(f"TELEGRAM ERROR: {e}")
@@ -395,7 +410,11 @@ def main():
             )
 
             try:
-                telegram(message)
+                telegram(
+                    message,
+                    button_url=product["url"],
+                    button_text="🛒 BUY NOW",
+                )
                 print(f"ALERT: {product['name']}")
             except Exception as e:
                 print(f"TELEGRAM ERROR: {e}")
@@ -419,3 +438,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+            
