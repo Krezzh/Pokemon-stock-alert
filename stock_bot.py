@@ -278,11 +278,21 @@ def main():
                 continue
 
             if status == "NOT_FOUND":
-                counts["not_found"] += 1
-                print(
-                    f"NOT_FOUND {product['retailer']} | "
-                    f"{product['name']} | HTTP {response.status_code}"
-                )
+                # JB Hi-Fi can return HTTP 404 to automated requests even
+                # when the public product page still exists. Do not treat
+                # that as proof the product is gone or out of stock.
+                if product["rules"] == "jbhifi":
+                    counts["blocked"] += 1
+                    print(
+                        f"UNVERIFIED {product['retailer']} | "
+                        f"{product['name']} | HTTP 404 from automated request"
+                    )
+                else:
+                    counts["not_found"] += 1
+                    print(
+                        f"NOT_FOUND {product['retailer']} | "
+                        f"{product['name']} | HTTP {response.status_code}"
+                    )
                 continue
 
             if status != "OK":
