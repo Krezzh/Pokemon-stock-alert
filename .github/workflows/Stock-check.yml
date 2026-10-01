@@ -24,11 +24,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
         
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+        
       - name: Check Pokémon stock
         env:
+        
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: "8604636004"
         run: python stock_bot.py
+
+      - name: Check Toyworld regional stock
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: "8604636004"
+        run: python toyworld_region_check.py
 
       - name: Save stock state
         run: |
