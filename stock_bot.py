@@ -114,6 +114,21 @@ def detect(product, soup):
             extract_price(soup, text)
         )
 
+    # Generic Shopify-style product pages (used for PokeStash).
+    # JSON-LD availability is checked first above, but this fallback
+    # catches pages where the visible page text is the only signal.
+    if rules == "generic":
+        if "sold out" in lower or "out of stock" in lower:
+            return False, extract_price(soup, text)
+
+        return (
+            "add to cart" in lower
+            or "add to bag" in lower
+            or "in stock" in lower
+            or "buy now" in lower,
+            extract_price(soup, text)
+        )
+
     return False, extract_price(soup, text)
 
 def telegram(message):
