@@ -135,7 +135,7 @@ def find_store_cards(lines):
 def search_location(page, location):
     try:
         buttons = page.get_by_text(
-            "Find Your Local Store",
+            "Find in Store",
             exact=True
         )
 
