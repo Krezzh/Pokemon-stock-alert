@@ -289,7 +289,7 @@ def main():
                                 f"🛒 {product['url']}"
                             )
 
-        browser.close()
+            browser.close()
 
     print("\n================================")
     print("TOYWORLD REGIONAL SUMMARY")
