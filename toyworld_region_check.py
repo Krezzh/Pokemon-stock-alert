@@ -8,6 +8,7 @@ PRODUCTS_FILE = Path("products.json")
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
+# Only check Manawatu and the lower North Island
 SEARCH_LOCATIONS = [
     ("Manawatu-Whanganui", "Palmerston North"),
     ("Manawatu-Whanganui", "Whanganui"),
@@ -111,13 +112,16 @@ def find_store_cards(lines):
                 break
 
             if any(x in low for x in (
-                "whangarei", "auckland", "albany", "hamilton",
-                "tauranga", "rotorua", "gisborne", "napier",
-                "hastings", "new plymouth", "palmerston north",
-                "whanganui", "wellington", "porirua", "lower hutt",
-                "upper hutt", "nelson", "richmond", "blenheim",
-                "christchurch", "ashburton", "timaru", "dunedin",
-                "queenstown", "invercargill", "gore"
+                "palmerston north",
+                "whanganui",
+                "levin",
+                "wellington",
+                "masterton",
+                "new plymouth",
+                "manawatu",
+                "horowhenua",
+                "wairarapa",
+                "taranaki",
             )) and len(prev) < 100:
                 candidate = prev
                 break
@@ -129,8 +133,6 @@ def find_store_cards(lines):
 
 
 def search_location(page, location):
-    """Search a Toyworld location without allowing long hangs."""
-
     try:
         buttons = page.get_by_text(
             "Find Your Local Store",
@@ -166,9 +168,7 @@ def search_location(page, location):
                     el.fill(location, timeout=2000)
                     el.press("Enter", timeout=2000)
 
-                    # Short wait for the store results.
                     page.wait_for_timeout(1200)
-
                     return True
 
             except Exception:
@@ -213,12 +213,10 @@ def main():
 
         for product in products:
 
-            print(f"\n================================")
+            print("\n==============================")
             print(f"Checking: {product['name']}")
-            print(f"================================")
+            print("==============================")
 
-            # IMPORTANT:
-            # Load the product page ONCE instead of once per region.
             try:
                 page.goto(
                     product["url"],
@@ -234,7 +232,10 @@ def main():
 
             for region, location in SEARCH_LOCATIONS:
 
-                print(f"  Checking {region} ({location})...")
+                print(
+                    f"  Checking {region} "
+                    f"({location})..."
+                )
 
                 try:
                     found = search_location(
@@ -243,7 +244,9 @@ def main():
                     )
 
                     if not found:
-                        print("    Store search box not found")
+                        print(
+                            "    Store search box not found"
+                        )
                         continue
 
                     try:
@@ -255,7 +258,9 @@ def main():
                         cards = find_store_cards(lines)
 
                     except Exception as e:
-                        print(f"    Could not read results: {e}")
+                        print(
+                            f"    Could not read results: {e}"
+                        )
                         continue
 
                     for store, status in cards:
@@ -289,13 +294,22 @@ def main():
                                 f"🛒 {product['url']}"
                             )
 
-            browser.close()
+                except Exception as e:
+                    print(
+                        f"    {region}: ERROR {e}"
+                    )
 
-    print("\n================================")
+        browser.close()
+
+    print("\n==============================")
     print("TOYWORLD REGIONAL SUMMARY")
-    print("================================")
-    print(f"Products checked: {len(products)}")
-    print(f"Store-stock positives: {len(alerts)}")
+    print("==============================")
+    print(
+        f"Products checked: {len(products)}"
+    )
+    print(
+        f"Store-stock positives: {len(alerts)}"
+    )
 
     if alerts:
         send_telegram(
@@ -304,7 +318,8 @@ def main():
     else:
         print(
             "No confirmed store-level "
-            "AVAILABLE/CALL TO CONFIRM results found."
+            "AVAILABLE/CALL TO CONFIRM "
+            "results found."
         )
 
 
