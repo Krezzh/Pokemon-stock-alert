@@ -1,1 +1,535 @@
-
+[
+  {
+    "retailer": "Mighty Ape",
+    "name": "Pokémon TCG: 30th Celebration - Booster Pack",
+    "url": "https://www.mightyape.co.nz/mn/buy/kogan-international-pokemon-tcg-30th-celebration-booster-pack-41205473/",
+    "rules": "mightyape"
+  },
+  {
+    "retailer": "Mighty Ape",
+    "name": "Pokémon TCG Mega 30th Celebration M6a Japanese Booster Box",
+    "url": "https://www.mightyape.co.nz/mn/buy/pokebox-australia-mega-30th-celebration-m6a-booster-box-japanese-pokemon-tcg-10395841724701/",
+    "rules": "mightyape"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+    "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-elite-trainer-box-43818587/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Knock Out Collection",
+    "url": "https://www.kmart.co.nz/product/pokemon-trading-card-game%3A-30th-celebration-knock-out-collection-43818556/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Pokémon ex Box",
+    "url": "https://www.kmart.co.nz/product/pokemon-trading-card-game%3A-30th-celebration-pokemon-ex-box-assorted-43818549/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Poster Collection",
+    "url": "https://www.kmart.co.nz/product/pokemon-trading-card-game%3A-30th-celebration-poster-collection-43818563/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection",
+    "url": "https://www.kmart.co.nz/product/pokemon-trading-card-game%3A-30th-celebration-tech-sticker-collection-assorted-43818570/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "Kmart NZ",
+    "name": "Pokémon TCG: 30th Celebration Binder Collection",
+    "url": "https://www.kmart.co.nz/product/pokemon-tcg%3A-30th-celebration-binder-collection-43818594/",
+    "rules": "kmart"
+  },
+  {
+    "retailer": "The Warehouse",
+    "name": "Pokémon 30th Celebration ex Box",
+    "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-ex-box---1-per-customer/R3099225.html",
+    "rules": "warehouse"
+  },
+  {
+    "retailer": "The Warehouse",
+    "name": "Pokémon 30th Celebration Knock Out Collection",
+    "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-knock-out-collection---1-per-customer/R3099329.html",
+    "rules": "warehouse"
+  },
+  {
+    "retailer": "The Warehouse",
+    "name": "Pokémon 30th Celebration Elite Trainer Box",
+    "url": "https://www.thewarehouse.co.nz/p/pokemon-30th-celebration-elite-trainer-box---1-per-customer/R3099331.html",
+    "rules": "warehouse"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-elite-trainer-box",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration Knock Out Collection",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-knock-out-collection",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration ex Box",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-ex-box-assorted-styles",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration Poster Box",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-poster-box",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration Binder Box",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-binder-box",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "JB Hi-Fi NZ",
+    "name": "Pokémon TCG: 30th Celebration Sticker Blister",
+    "url": "https://www.jbhifi.co.nz/products/trading-card-game-pokemon-tcg-30th-celebration-sticker-blister-assorted-styles",
+    "rules": "jbhifi"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration 2-Pack Blister",
+    "url": "https://pokestash.co.nz/products/30th-celebration-2-pack-blister-704148",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Booster Bundle",
+    "url": "https://pokestash.co.nz/products/30th-celebration-booster-bundle-704171",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Mini Tin Display (10 tins)",
+    "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-display-704186",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Battle Deck - Espeon ex",
+    "url": "https://pokestash.co.nz/products/30th-celebration-battle-deck-espeon-ex-704187",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Battle Deck - Umbreon ex",
+    "url": "https://pokestash.co.nz/products/30th-celebration-battle-deck-umbreon-ex-704188",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Ditto Premium Collection",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ditto-premium-collection-704189",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Ultra-Premium Collection - Day",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ultra-premium-collection-day-704190",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Ultra-Premium Collection - Night",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ultra-premium-collection-night-704191",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Figure Collection - Mew",
+    "url": "https://pokestash.co.nz/products/30th-celebration-figure-collection-mew-704193",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Figure Collection - Mewtwo",
+    "url": "https://pokestash.co.nz/products/30th-celebration-figure-collection-mewtwo-704194",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Alolan Exeggutor",
+    "url": "https://pokestash.co.nz/products/30th-celebration-tech-sticker-collection-alolan-exeggutor-704145",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Lucario",
+    "url": "https://pokestash.co.nz/products/30th-celebration-tech-sticker-collection-lucario-704146",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Booster Pack",
+    "url": "https://pokestash.co.nz/products/30th-celebration-pack-696613",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+    "url": "https://pokestash.co.nz/products/30th-celebration-elite-trainer-box-704143",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Binder Collection",
+    "url": "https://pokestash.co.nz/products/30th-celebration-binder-collection-704169",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Poster Collection",
+    "url": "https://pokestash.co.nz/products/30th-celebration-poster-collection-704153",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Knock Out Collection",
+    "url": "https://pokestash.co.nz/products/30th-celebration-knock-out-collection-704152",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Pokémon ex Box - Greninja ex",
+    "url": "https://pokestash.co.nz/products/30th-celebration-greninja-ex-box-704168",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Pokémon ex Box - Sylveon ex",
+    "url": "https://pokestash.co.nz/products/30th-celebration-sylveon-ex-box-704155",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration ex Tin - Set of 2",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ex-tin-set-of-2-704151",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration ex Tin Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ex-tin-case-709031",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration ex Box Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ex-box-case-709037",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Figure Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-figure-collection-case-709019",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Set of 2",
+    "url": "https://pokestash.co.nz/products/30th-celebration-tech-sticker-collection-set-of-2-704147",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Ultra-Premium Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ultra-premium-collection-case-709029",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Booster Bundle Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-booster-bundle-case-709017",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Knock Out Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-knock-out-collection-case-709035",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Elite Trainer Box Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-elite-trainer-box-case-709036",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Binder Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-binder-collection-case-709032",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Poster Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-poster-collection-case-709033",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Tech Sticker Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-tech-sticker-collection-case-709034",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Ditto Premium Collection Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-ditto-premium-collection-case-709018",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Mini Tin Display Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-display-case-709030",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Battle Deck Case",
+    "url": "https://pokestash.co.nz/products/30th-celebration-battle-deck-case-709016",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Pokémon Center Elite Trainer Box",
+    "url": "https://pokestash.co.nz/products/30th-celebration-pokemon-center-elite-trainer-box-704144",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Classic Collection Pack",
+    "url": "https://pokestash.co.nz/products/30th-celebration-classic-collection-pack-704192",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Mini Tin - Day Pikachu",
+    "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-day-pikachu-704177",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Mini Tin - Night Pikachu",
+    "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-night-pikachu-704184",
+    "rules": "generic"
+  },
+  {
+    "retailer": "PokeStash NZ",
+    "name": "Pokémon TCG: 30th Celebration Mini Tin - Greninja",
+    "url": "https://pokestash.co.nz/products/30th-celebration-mini-tin-greninja-704185",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Elite Trainer Box",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-elite-trainer-box-7064540",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Poster Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-poster-collection-7064538",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Knock Out Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-knock-out-collection-7064537",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Binder Collection",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-binder-collection-7064591",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Tech Sticker Collection - Assorted",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-tech-sticker-collection-assorted-7064539",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Farmers NZ",
+    "name": "Pokémon Trading Card 30th Sylveon/Greninja EX Box, Assorted",
+    "url": "https://www.farmers.co.nz/toys/games-cards-puzzles/pokemon-trading-card-30th-sylveon-greninja-ex-box-assorted-7064536",
+    "rules": "farmers"
+  },
+  {
+    "retailer": "Game Corner NZ",
+    "name": "Pokémon TCG 30th Celebration Elite Trainer Box",
+    "url": "https://gamecorner.co.nz/collections/pokemon-tcg-30th-celebration/products/pokemon-tcg-30th-celebration-elite-trainer-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Game Corner NZ",
+    "name": "Pokémon TCG 30th Celebration Knock Out Collection",
+    "url": "https://gamecorner.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Elite Trainer Box",
+    "url": "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-elite-trainer-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Sylveon ex Box / Greninja ex Box",
+    "url": "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-sylveon-ex-box-greninja-ex-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Knock Out Collection",
+    "url": "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Tech Sticker Collection",
+    "url": "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-tech-sticker-collection",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Poster Collection",
+    "url": "https://ocare.co.nz/products/pokemon-tcg-30th-celebration-poster-collection",
+    "rules": "generic"
+  },
+  {
+    "retailer": "OCARE NZ",
+    "name": "Pokémon TCG 30th Celebration Binder Collection",
+    "url": "https://ocare.co.nz/ja/products/pokemon-tcg-30th-celebration-binder-collection",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Metalife NZ",
+    "name": "Pokémon TCG 30th Anniversary Celebration Elite Trainer Box",
+    "url": "https://www.metalife.co.nz/en-au/products/pokemon-tcg-30th-anniversary-celebration-elite-trainer-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Metalife NZ",
+    "name": "Pokémon TCG 30th Anniversary Celebration Booster Bundle",
+    "url": "https://www.metalife.co.nz/en-au/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Metalife NZ",
+    "name": "Pokémon TCG 30th Anniversary Celebration ex Box",
+    "url": "https://www.metalife.co.nz/en-au/collections/trading-card-games/products/pokemon-tcg-30th-anniversary-celebration-ex-box",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toy Time NZ",
+    "name": "Pokémon TCG 30th Celebration Elite Trainer Box",
+    "url": "https://toytime.co.nz/products/pokemon-tcg-30th-celebration-elite-trainer-box-pre-order",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toy Time NZ",
+    "name": "Pokémon TCG 30th Celebration Knock Out Collection",
+    "url": "https://toytime.co.nz/products/pokemon-tcg-celebration-ex-box-pre-order-copy",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toy Time NZ",
+    "name": "Pokémon TCG 30th Celebration Binder Collection",
+    "url": "https://toytime.co.nz/products/pokemon-tcg-30th-celebration-knock-out-collection-pre-order-copy",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Mighty Ape NZ",
+    "name": "Pokémon TCG Ascended Heroes Focused Fighters Premium Collection",
+    "url": "https://www.mightyape.co.nz/mn/buy/pokebox-australia-pokemon-tcg-mega-evolution-ascended-heroes-focused-fighters-box-10319213429021/",
+    "rules": "mightyape",
+    "watch_reachability": true
+  },
+  {
+    "retailer": "EB Games Australia",
+    "name": "Pokémon TCG Ascended Heroes Focused Fighters Premium Collection (watch page)",
+    "url": "https://www.ebgames.com.au/featured/pokemon-trading-card-game",
+    "rules": "keyword",
+    "keywords": [
+      "focused fighters",
+      "ascended heroes"
+    ],
+    "watch_reachability": true
+  },
+  {
+    "retailer": "JB Hi-Fi Australia",
+    "name": "Pokémon TCG Ascended Heroes Focused Fighters Premium Collection (watch page)",
+    "url": "https://www.jbhifi.com.au/collections/collectibles-merchandise/pokemon-trading-cards",
+    "rules": "keyword",
+    "keywords": [
+      "focused fighters",
+      "ascended heroes"
+    ],
+    "watch_reachability": true
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 8 Inch Plush 30th Anniversary Espeon",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-espeon",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 8 Inch Plush 30th Anniversary Morpeko",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-morpeko",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 8 Inch Plush 30th Anniversary Pikachu",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-pikachu",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 8 Inch Plush 30th Anniversary Vulpix",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-8-inch-plush-30th-anniversary-vulpix",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 30th Anniversary Glitter 3 Inch Battle Figure Gengar",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-gengar",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 30th Anniversary Glitter 3 Inch Battle Figure Umbreon",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-umbreon",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 30th Anniversary Glitter 3 Inch Battle Figure Pikachu",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-pikachu",
+    "rules": "generic"
+  },
+  {
+    "retailer": "Toyworld NZ",
+    "name": "Pokémon Select 30th Anniversary Glitter 3 Inch Battle Figure Morpeko",
+    "url": "https://www.toyworld.co.nz/products/pokemon-select-30th-anniversary-glitter-3-inch-battle-figure-morpeko",
+    "rules": "generic"
+  }
+]
