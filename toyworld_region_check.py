@@ -15,6 +15,8 @@ TOYWORLD_WIDGET = "51"
 PALMERSTON_NORTH_STORE = "1065"
 PALMERSTON_NORTH_LATLONG = "-40.3583099_175.6125759"
 
+STATE_FILE = "toyworld_state.json"
+
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
@@ -31,7 +33,41 @@ PRODUCTS = [
 ]
 
 
+def load_state():
+    """Load the previous Toyworld stock values."""
+
+    if not os.path.exists(STATE_FILE):
+        return {}
+
+    try:
+        with open(STATE_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if isinstance(data, dict):
+            return data
+
+    except Exception as e:
+        print(f"Could not load Toyworld state: {e}")
+
+    return {}
+
+
+def save_state(state):
+    """Save the current Toyworld stock values."""
+
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2)
+
+        print("Toyworld stock state saved.")
+
+    except Exception as e:
+        print(f"Could not save Toyworld state: {e}")
+
+
 def send_telegram(message):
+    """Send a Telegram notification."""
+
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram credentials not found.")
         return
@@ -41,13 +77,15 @@ def send_telegram(message):
         f"{TELEGRAM_BOT_TOKEN}/sendMessage"
     )
 
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+    }
+
     try:
         response = requests.post(
             url,
-            data={
-                "chat_id": TELEGRAM_CHAT_ID,
-                "text": message,
-            },
+            data=payload,
             timeout=20,
         )
 
@@ -58,6 +96,7 @@ def send_telegram(message):
 
 
 def check_stock(product):
+    """Check Palmerston North stock for one product."""
 
     name = product["name"]
     upc = product["upc"]
@@ -83,7 +122,7 @@ def check_stock(product):
         "items": json.dumps([
             {
                 "upc": upc,
-                "quantity": 1
+                "quantity": 1,
             }
         ]),
         "lang": "en",
@@ -92,8 +131,6 @@ def check_stock(product):
         "isajax": "1",
     }
 
-    # Make the request look like it came from the Toyworld
-    # Find In Store widget running in a normal browser.
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -125,11 +162,13 @@ def check_stock(product):
 
         print(f"ERROR checking {name}: {e}")
 
-        return 0
+        # None means the check failed.
+        # We must NOT treat an error as zero stock.
+        return None
 
     response_data = data.get("response", [])
 
-    # Toyworld may return the response as JSON text.
+    # Toyworld returns the response as JSON text.
     if isinstance(response_data, str):
 
         try:
@@ -140,7 +179,7 @@ def check_stock(product):
             print("ERROR: Could not decode Toyworld response.")
             print(response_data[:1000])
 
-            return 0
+            return None
 
     if isinstance(response_data, dict):
 
@@ -153,15 +192,18 @@ def check_stock(product):
     else:
 
         print("ERROR: Unexpected Toyworld response format.")
-        print(type(response_data))
 
-        return 0
+        return None
 
     if not isinstance(stores, list):
 
         print("ERROR: Store data is not a list.")
 
-        return 0
+        return None
+
+    # --------------------------------------------------------
+    # Find Palmerston North
+    # --------------------------------------------------------
 
     for store in stores:
 
@@ -191,29 +233,16 @@ def check_stock(product):
             stock = int(float(stock_raw))
 
         except (TypeError, ValueError):
+
             stock = 0
 
         store_name = store.get(
             "store_name",
-            "Toyworld Palmerston North"
+            "Toyworld Palmerston North",
         )
 
         print(f"Store: {store_name}")
         print(f"Stock reported: {stock}")
-
-        if stock > 0:
-
-            message = (
-                "🚨 TOYWORLD POKÉMON 30TH STOCK!\n\n"
-                f"📦 {name}\n"
-                "📍 Toyworld Palmerston North\n"
-                f"📊 Reported stock: {stock}\n"
-                f"🔢 UPC: {upc}\n\n"
-                "⚠️ Stock can change quickly. "
-                "Confirm with the store before travelling."
-            )
-
-            send_telegram(message)
 
         return stock
 
@@ -222,7 +251,7 @@ def check_stock(product):
         "in the response."
     )
 
-    return 0
+    return None
 
 
 def main():
@@ -232,14 +261,113 @@ def main():
     print("TOYWORLD PALMERSTON NORTH - 30TH POKÉMON STOCK CHECK")
     print("=" * 55)
 
+    # Load previous stock
+    previous_state = load_state()
+
+    # Start with a copy so successful checks can update it.
+    new_state = dict(previous_state)
+
     for product in PRODUCTS:
 
-        stock = check_stock(product)
+        name = product["name"]
+        upc = product["upc"]
+
+        current_stock = check_stock(product)
+
+        # ----------------------------------------------------
+        # API/check failed
+        # ----------------------------------------------------
+
+        if current_stock is None:
+
+            print(
+                f"Stock check failed for {name}. "
+                "Keeping previous state."
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # Previous stock
+        # ----------------------------------------------------
+
+        previous_stock = previous_state.get(upc)
 
         print(
-            f"Finished: {product['name']} "
-            f"| Stock: {stock}"
+            f"Previous stock: {previous_stock}"
         )
+
+        print(
+            f"Current stock: {current_stock}"
+        )
+
+        # ----------------------------------------------------
+        # Save current stock
+        # ----------------------------------------------------
+
+        new_state[upc] = current_stock
+
+        # ----------------------------------------------------
+        # Decide whether to send Telegram
+        # ----------------------------------------------------
+
+        if previous_stock is None:
+
+            # First ever check.
+            # Alert if stock is already available.
+
+            if current_stock > 0:
+
+                message = (
+                    "🚨 TOYWORLD POKÉMON 30TH STOCK!\n\n"
+                    f"📦 {name}\n"
+                    "📍 Toyworld Palmerston North\n"
+                    f"📊 Reported stock: {current_stock}\n"
+                    f"🔢 UPC: {upc}\n\n"
+                    "⚠️ Stock can change quickly. "
+                    "Confirm with the store before travelling."
+                )
+
+                send_telegram(message)
+
+        elif current_stock != previous_stock:
+
+            # Stock changed since the previous check.
+            # Only alert when there is currently stock.
+
+            if current_stock > 0:
+
+                message = (
+                    "🚨 TOYWORLD POKÉMON 30TH STOCK CHANGE!\n\n"
+                    f"📦 {name}\n"
+                    "📍 Toyworld Palmerston North\n"
+                    f"📊 Previous: {previous_stock}\n"
+                    f"📦 Now: {current_stock}\n"
+                    f"🔢 UPC: {upc}\n\n"
+                    "⚠️ Stock can change quickly. "
+                    "Confirm with the store before travelling."
+                )
+
+                send_telegram(message)
+
+            else:
+
+                print(
+                    f"{name} is now out of stock."
+                )
+
+        else:
+
+            print(
+                f"No stock change for {name}. "
+                "No Telegram alert."
+            )
+
+    # --------------------------------------------------------
+    # Save state after all products have been checked.
+    # --------------------------------------------------------
+
+    save_state(new_state)
 
     print()
     print("=" * 55)
