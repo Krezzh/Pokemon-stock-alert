@@ -27,7 +27,7 @@ jobs:
       - name: Check Toyworld Palmerston North stock
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: "8604636004"
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python toyworld_region_check.py
 
       - name: Save Toyworld stock state
