@@ -62,6 +62,7 @@ def extract_price(soup, text):
         for item in items:
             if not isinstance(item, dict):
                 continue
+
             offers = item.get("offers")
             if isinstance(offers, dict):
                 price = offers.get("price")
@@ -161,26 +162,60 @@ def detect(product, soup):
             or "in stock" in lower
         ), extract_price(soup, text)
 
+    # Farmers-specific availability detection.
+    # Farmers currently uses wording such as:
+    # "Sorry this product is currently out of stock online."
+    if rules == "farmers":
+        if (
+            "out of stock online" in lower
+            or "out of stock" in lower
+            or "sold out" in lower
+        ):
+            return False, extract_price(soup, text)
+
+        return (
+            "add to cart" in lower
+            or "add to bag" in lower
+            or "buy now" in lower
+            or "in stock" in lower
+        ), extract_price(soup, text)
+
     if rules == "keyword":
         # Used for retailer category/watch pages when the exact product URL
         # has not been published yet. Only report available when the target
         # product name appears near a purchase/preorder signal.
         keywords = [k.lower() for k in product.get("keywords", [])]
+
         purchase_signals = (
-            "add to cart", "add to bag", "buy now", "preorder",
-            "pre-order", "in stock", "available"
+            "add to cart",
+            "add to bag",
+            "buy now",
+            "preorder",
+            "pre-order",
+            "in stock",
+            "available",
         )
+
         for keyword in keywords:
             start = 0
+
             while True:
                 idx = lower.find(keyword, start)
+
                 if idx == -1:
                     break
+
                 window = lower[max(0, idx - 700): idx + 700]
+
                 if any(signal in window for signal in purchase_signals):
-                    if "sold out" not in window and "out of stock" not in window:
+                    if (
+                        "sold out" not in window
+                        and "out of stock" not in window
+                    ):
                         return True, extract_price(soup, text)
+
                 start = idx + len(keyword)
+
         return False, extract_price(soup, text)
 
     # Generic Shopify-style pages such as PokeStash.
@@ -217,6 +252,7 @@ def fetch_page(session, url):
                 timeout=30,
                 allow_redirects=True,
             )
+
             last_response = response
 
             if response.status_code == 200:
@@ -227,6 +263,7 @@ def fetch_page(session, url):
                 if attempt < 2:
                     time.sleep(2 + attempt * 2)
                     continue
+
                 return response, "BLOCKED"
 
             if response.status_code == 404:
@@ -234,18 +271,21 @@ def fetch_page(session, url):
                 if attempt == 0:
                     time.sleep(2)
                     continue
+
                 return response, "NOT_FOUND"
 
             if response.status_code >= 500:
                 if attempt < 2:
                     time.sleep(2 + attempt * 2)
                     continue
+
                 return response, "ERROR"
 
             response.raise_for_status()
 
         except requests.RequestException as exc:
             last_error = exc
+
             if attempt < 2:
                 time.sleep(2 + attempt * 2)
                 continue
@@ -270,7 +310,10 @@ def telegram(message, button_url=None, button_text="🛒 BUY NOW"):
     if button_url:
         payload["reply_markup"] = {
             "inline_keyboard": [[
-                {"text": button_text, "url": button_url}
+                {
+                    "text": button_text,
+                    "url": button_url,
+                }
             ]]
         }
 
@@ -279,6 +322,7 @@ def telegram(message, button_url=None, button_text="🛒 BUY NOW"):
         json=payload,
         timeout=30,
     )
+
     r.raise_for_status()
 
 
@@ -300,15 +344,22 @@ def main():
         key = product["url"]
 
         try:
-            response, status = fetch_page(session, product["url"])
+            response, status = fetch_page(
+                session,
+                product["url"],
+            )
 
             if status == "BLOCKED":
                 counts["blocked"] += 1
 
-                # For Focused Fighters watch entries, remember that the page
-                # was blocked so we can alert if it becomes reachable later.
+                # For watch entries, remember that the page was blocked
+                # so we can alert if it becomes reachable later.
                 if product.get("watch_reachability"):
-                    previous_access = state.get(key, {}).get("access_status")
+                    previous_access = state.get(
+                        key,
+                        {}
+                    ).get("access_status")
+
                     new_state[key] = {
                         **state.get(key, {}),
                         "access_status": "BLOCKED",
@@ -316,8 +367,10 @@ def main():
 
                 print(
                     f"BLOCKED {product['retailer']} | "
-                    f"{product['name']} | HTTP {response.status_code}"
+                    f"{product['name']} | "
+                    f"HTTP {response.status_code}"
                 )
+
                 continue
 
             if status == "NOT_FOUND":
@@ -326,50 +379,68 @@ def main():
                 # that as proof the product is gone or out of stock.
                 if product["rules"] == "jbhifi":
                     counts["blocked"] += 1
+
                     print(
                         f"UNVERIFIED {product['retailer']} | "
-                        f"{product['name']} | HTTP 404 from automated request"
+                        f"{product['name']} | "
+                        f"HTTP 404 from automated request"
                     )
+
                 else:
                     counts["not_found"] += 1
+
                     print(
                         f"NOT_FOUND {product['retailer']} | "
-                        f"{product['name']} | HTTP {response.status_code}"
+                        f"{product['name']} | "
+                        f"HTTP {response.status_code}"
                     )
+
                 continue
 
             if status != "OK":
                 counts["error"] += 1
+
                 print(
                     f"ERROR {product['retailer']} | "
-                    f"{product['name']} | HTTP {response.status_code}"
+                    f"{product['name']} | "
+                    f"HTTP {response.status_code}"
                 )
+
                 continue
 
-            soup = BeautifulSoup(response.text, "html.parser")
-            available, price = detect(product, soup)
+            soup = BeautifulSoup(
+                response.text,
+                "html.parser",
+            )
+
+            available, price = detect(
+                product,
+                soup,
+            )
 
         except Exception as e:
             counts["error"] += 1
+
             print(
                 f"ERROR {product['retailer']} | "
-                f"{product['name']} | {e}"
+                f"{product['name']} | "
+                f"{e}"
             )
+
             continue
 
         previous_entry = state.get(key, {})
         previous = previous_entry.get("available")
         previous_access = previous_entry.get("access_status")
+
         new_state[key] = {
             "available": available,
             "price": price,
             "access_status": "OK",
         }
 
-        # If a Focused Fighters page was previously blocked but is now
-        # reachable, alert immediately even if the product is still shown
-        # as out of stock. This tells us the retailer page has gone live
-        # enough for manual checking.
+        # If a watch page was previously blocked but is now reachable,
+        # alert immediately even if the product is still out of stock.
         if (
             product.get("watch_reachability")
             and previous_access == "BLOCKED"
@@ -387,9 +458,15 @@ def main():
                     button_url=product["url"],
                     button_text="🔎 CHECK NOW",
                 )
-                print(f"ACCESS ALERT: {product['name']}")
+
+                print(
+                    f"ACCESS ALERT: {product['name']}"
+                )
+
             except Exception as e:
-                print(f"TELEGRAM ERROR: {e}")
+                print(
+                    f"TELEGRAM ERROR: {e}"
+                )
 
         if available:
             counts["available"] += 1
@@ -400,7 +477,11 @@ def main():
 
         # Alert on a transition to available, or on first run if already available.
         if available and previous is not True:
-            price_line = f"\n💰 {price}" if price else ""
+            price_line = (
+                f"\n💰 {price}"
+                if price
+                else ""
+            )
 
             message = (
                 "🟢 POKÉMON 30TH STOCK ALERT\n\n"
@@ -415,14 +496,24 @@ def main():
                     button_url=product["url"],
                     button_text="🛒 BUY NOW",
                 )
-                print(f"ALERT: {product['name']}")
+
+                print(
+                    f"ALERT: {product['name']}"
+                )
+
             except Exception as e:
-                print(f"TELEGRAM ERROR: {e}")
+                print(
+                    f"TELEGRAM ERROR: {e}"
+                )
 
         print(
             f"{stock_status} {product['retailer']} | "
             f"{product['name']}"
-            + (f" | {price}" if price else "")
+            + (
+                f" | {price}"
+                if price
+                else ""
+            )
         )
 
     print("\n========== STOCK CHECK SUMMARY ==========")
@@ -438,4 +529,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-            
