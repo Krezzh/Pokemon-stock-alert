@@ -2,7 +2,7 @@ name: Pokémon 30th Stock Checker
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
