@@ -1,12 +1,10 @@
 import json
 import os
-from pathlib import Path
-
 import requests
 
 
 # ============================================================
-# TOYWORLD STOCK-IN-STORE SETTINGS
+# TOYWORLD PALMERSTON NORTH - POKÉMON 30TH STOCK CHECKER
 # ============================================================
 
 STOCK_URL = "https://stockinstore.net/stores/getStoresStock"
@@ -14,16 +12,12 @@ STOCK_URL = "https://stockinstore.net/stores/getStoresStock"
 TOYWORLD_SITE = "10044"
 TOYWORLD_WIDGET = "51"
 
-# Toyworld Palmerston North
 PALMERSTON_NORTH_STORE = "1065"
-
-# Store coordinates from Toyworld's Stockinstore data
 PALMERSTON_NORTH_LATLONG = "-40.3583099_175.6125759"
 
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-# ============================================================
-# PRODUCTS WE WANT TO WATCH
-# ============================================================
 
 PRODUCTS = [
     {
@@ -37,29 +31,27 @@ PRODUCTS = [
 ]
 
 
-# ============================================================
-# TELEGRAM
-# ============================================================
-
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-
-
 def send_telegram(message):
+    """Send a Telegram notification."""
+
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        print(message)
+        print("Telegram credentials not found.")
         return
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    url = (
+        f"https://api.telegram.org/bot"
+        f"{TELEGRAM_BOT_TOKEN}/sendMessage"
+    )
+
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+    }
 
     try:
         response = requests.post(
             url,
-            json={
-                "chat_id": TELEGRAM_CHAT_ID,
-                "text": message,
-                "disable_web_page_preview": True,
-            },
+            data=payload,
             timeout=20,
         )
 
@@ -69,12 +61,20 @@ def send_telegram(message):
         print(f"Telegram error: {e}")
 
 
-# ============================================================
-# STOCK CHECK
-# ============================================================
-
 def check_stock(product):
+    """Check Palmerston North stock for one product."""
+
+    name = product["name"]
     upc = product["upc"]
+
+    print()
+    print("=" * 55)
+    print(f"Checking {name}")
+    print(f"UPC: {upc}")
+    print(
+        "Store: Toyworld Palmerston North "
+        f"({PALMERSTON_NORTH_STORE})"
+    )
 
     payload = {
         "site": TOYWORLD_SITE,
@@ -85,21 +85,19 @@ def check_stock(product):
         "latlong": PALMERSTON_NORTH_LATLONG,
         "preview": "false",
         "thresholdType": "cnc",
-        "items": json.dumps([
-            {
-                "upc": upc,
-                "quantity": 1
-            }
-        ]),
+        "items": json.dumps(
+            [
+                {
+                    "upc": upc,
+                    "quantity": 1,
+                }
+            ]
+        ),
         "lang": "en",
         "widgetType": "product",
         "info": "none",
         "isajax": "1",
     }
-
-    print(f"\nChecking {product['name']}")
-    print(f"UPC: {upc}")
-    print("Store: Toyworld Palmerston North (1065)")
 
     try:
         response = requests.post(
@@ -115,117 +113,129 @@ def check_stock(product):
         data = response.json()
 
     except Exception as e:
-        print(f"ERROR checking {product['name']}: {e}")
-        return None
-    
-response_data = data.get("response", [])
-
-# Toyworld returns the store data as JSON text
-if isinstance(response_data, str):
-    try:
-        response_data = json.loads(response_data)
-    except json.JSONDecodeError:
-        print("ERROR: Could not decode Toyworld response")
-        print(response_data[:1000])
+        print(f"ERROR checking {name}: {e}")
         return 0
 
-# The decoded response should be a list of stores
-if isinstance(response_data, dict):
-    stores = response_data.get("stores", [])
-else:
-    stores = response_data
+    # --------------------------------------------------------
+    # Toyworld returns the "response" field as JSON text.
+    # Decode it if necessary.
+    # --------------------------------------------------------
 
-if not isinstance(stores, list):
-    print("ERROR: Unexpected Toyworld response format")
-    print(type(stores))
-    return 0
+    response_data = data.get("response", [])
 
-for store in stores:
-
-    if isinstance(store, str):
+    if isinstance(response_data, str):
         try:
-            store = json.loads(store)
+            response_data = json.loads(response_data)
         except json.JSONDecodeError:
+            print("ERROR: Could not decode Toyworld response.")
+            print(response_data[:1000])
+            return 0
+
+    # --------------------------------------------------------
+    # The decoded response can be a list of stores or a
+    # dictionary containing a stores list.
+    # --------------------------------------------------------
+
+    if isinstance(response_data, dict):
+        stores = response_data.get("stores", [])
+    elif isinstance(response_data, list):
+        stores = response_data
+    else:
+        print("ERROR: Unexpected Toyworld response format.")
+        print(f"Type: {type(response_data)}")
+        return 0
+
+    if not isinstance(stores, list):
+        print("ERROR: Store data is not a list.")
+        return 0
+
+    # --------------------------------------------------------
+    # Find Palmerston North
+    # --------------------------------------------------------
+
+    for store in stores:
+
+        # Occasionally a store can itself be returned as
+        # JSON text, so decode it if necessary.
+        if isinstance(store, str):
+            try:
+                store = json.loads(store)
+            except json.JSONDecodeError:
+                continue
+
+        if not isinstance(store, dict):
             continue
 
-    if not isinstance(store, dict):
-        continue
+        store_code = str(
+            store.get("code")
+            or store.get("gmb_store_code")
+            or ""
+        )
 
-    store_code = str(
-        store.get("code")
-        or store.get("gmb_store_code")
-        or ""
-    )
-
-    if store_code != PALMERSTON_NORTH_STORE:
-        continue
-
-    stock_raw = store.get("stock", "0")
-
-    try:
-        stock = int(float(stock_raw))
-    except (TypeError, ValueError):
-        stock = 0
-
-    print(
-        f"Store: {store.get('store_name', 'Toyworld Palmerston North')}"
-    )
-    print(f"Stock reported: {stock}")
-
-    return stock
-
-print("Toyworld Palmerston North was not found in the response.")
-return 0
-
-    print("Palmerston North store was not found in the response.")
-    return None
-
-
-# ============================================================
-# MAIN
-# ============================================================
-
-def main():
-
-    alerts = []
-
-    print("=" * 60)
-    print("TOYWORLD PALMERSTON NORTH - 30TH POKÉMON STOCK CHECK")
-    print("=" * 60)
-
-    for product in PRODUCTS:
-
-        stock = check_stock(product)
-
-        if stock is None:
+        if store_code != PALMERSTON_NORTH_STORE:
             continue
+
+        stock_raw = store.get("stock", "0")
+
+        try:
+            stock = int(float(stock_raw))
+        except (TypeError, ValueError):
+            stock = 0
+
+        store_name = store.get(
+            "store_name",
+            "Toyworld Palmerston North",
+        )
+
+        print(f"Store: {store_name}")
+        print(f"Stock reported: {stock}")
+
+        # ----------------------------------------------------
+        # Alert if stock is reported
+        # ----------------------------------------------------
 
         if stock > 0:
 
             message = (
                 "🚨 TOYWORLD POKÉMON 30TH STOCK!\n\n"
-                f"📦 {product['name']}\n"
-                f"📍 Toyworld Palmerston North\n"
-                f"🔢 Reported stock: {stock}\n"
-                f"🏷️ UPC: {product['upc']}\n\n"
-                "⚠️ Toyworld stock data can change quickly — "
-                "confirm with the store before travelling."
+                f"📦 {name}\n"
+                "📍 Toyworld Palmerston North\n"
+                f"📊 Reported stock: {stock}\n"
+                f"🔢 UPC: {upc}\n\n"
+                "⚠️ Stock can change quickly. "
+                "Confirm with the store before travelling."
             )
 
-            alerts.append(message)
+            send_telegram(message)
 
-        else:
-            print(f"❌ OUT OF STOCK: {product['name']}")
+        return stock
 
-    print("\n" + "=" * 60)
-    print(f"Products checked: {len(PRODUCTS)}")
-    print(f"Positive stock alerts: {len(alerts)}")
-    print("=" * 60)
+    print(
+        "Toyworld Palmerston North was not found "
+        "in the response."
+    )
 
-    if alerts:
-        send_telegram("\n\n".join(alerts))
-    else:
-        print("No Palmerston North stock found.")
+    return 0
+
+
+def main():
+    print()
+    print("=" * 55)
+    print("TOYWORLD PALMERSTON NORTH - 30TH POKÉMON STOCK CHECK")
+    print("=" * 55)
+
+    for product in PRODUCTS:
+        stock = check_stock(product)
+
+        print(
+            f"Finished: {product['name']} "
+            f"| Stock: {stock}"
+        )
+
+    print()
+    print("=" * 55)
+    print("TOYWORLD CHECK COMPLETE")
+    print("=" * 55)
 
 
 if __name__ == "__main__":
