@@ -32,8 +32,6 @@ PRODUCTS = [
 
 
 def send_telegram(message):
-    """Send a Telegram notification."""
-
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram credentials not found.")
         return
@@ -43,15 +41,13 @@ def send_telegram(message):
         f"{TELEGRAM_BOT_TOKEN}/sendMessage"
     )
 
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-    }
-
     try:
         response = requests.post(
             url,
-            data=payload,
+            data={
+                "chat_id": TELEGRAM_CHAT_ID,
+                "text": message,
+            },
             timeout=20,
         )
 
@@ -62,7 +58,6 @@ def send_telegram(message):
 
 
 def check_stock(product):
-    """Check Palmerston North stock for one product."""
 
     name = product["name"]
     upc = product["upc"]
@@ -85,24 +80,38 @@ def check_stock(product):
         "latlong": PALMERSTON_NORTH_LATLONG,
         "preview": "false",
         "thresholdType": "cnc",
-        "items": json.dumps(
-            [
-                {
-                    "upc": upc,
-                    "quantity": 1,
-                }
-            ]
-        ),
+        "items": json.dumps([
+            {
+                "upc": upc,
+                "quantity": 1
+            }
+        ]),
         "lang": "en",
         "widgetType": "product",
         "info": "none",
         "isajax": "1",
     }
 
+    # Make the request look like it came from the Toyworld
+    # Find In Store widget running in a normal browser.
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/140.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Origin": "https://www.toyworld.co.nz",
+        "Referer": "https://www.toyworld.co.nz/",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+
     try:
+
         response = requests.post(
             STOCK_URL,
             data=payload,
+            headers=headers,
             timeout=30,
         )
 
@@ -113,53 +122,54 @@ def check_stock(product):
         data = response.json()
 
     except Exception as e:
-        print(f"ERROR checking {name}: {e}")
-        return 0
 
-    # --------------------------------------------------------
-    # Toyworld returns the "response" field as JSON text.
-    # Decode it if necessary.
-    # --------------------------------------------------------
+        print(f"ERROR checking {name}: {e}")
+
+        return 0
 
     response_data = data.get("response", [])
 
+    # Toyworld may return the response as JSON text.
     if isinstance(response_data, str):
+
         try:
             response_data = json.loads(response_data)
+
         except json.JSONDecodeError:
+
             print("ERROR: Could not decode Toyworld response.")
             print(response_data[:1000])
+
             return 0
 
-    # --------------------------------------------------------
-    # The decoded response can be a list of stores or a
-    # dictionary containing a stores list.
-    # --------------------------------------------------------
-
     if isinstance(response_data, dict):
+
         stores = response_data.get("stores", [])
+
     elif isinstance(response_data, list):
+
         stores = response_data
+
     else:
+
         print("ERROR: Unexpected Toyworld response format.")
-        print(f"Type: {type(response_data)}")
+        print(type(response_data))
+
         return 0
 
     if not isinstance(stores, list):
-        print("ERROR: Store data is not a list.")
-        return 0
 
-    # --------------------------------------------------------
-    # Find Palmerston North
-    # --------------------------------------------------------
+        print("ERROR: Store data is not a list.")
+
+        return 0
 
     for store in stores:
 
-        # Occasionally a store can itself be returned as
-        # JSON text, so decode it if necessary.
         if isinstance(store, str):
+
             try:
                 store = json.loads(store)
+
             except json.JSONDecodeError:
                 continue
 
@@ -179,20 +189,17 @@ def check_stock(product):
 
         try:
             stock = int(float(stock_raw))
+
         except (TypeError, ValueError):
             stock = 0
 
         store_name = store.get(
             "store_name",
-            "Toyworld Palmerston North",
+            "Toyworld Palmerston North"
         )
 
         print(f"Store: {store_name}")
         print(f"Stock reported: {stock}")
-
-        # ----------------------------------------------------
-        # Alert if stock is reported
-        # ----------------------------------------------------
 
         if stock > 0:
 
@@ -219,12 +226,14 @@ def check_stock(product):
 
 
 def main():
+
     print()
     print("=" * 55)
     print("TOYWORLD PALMERSTON NORTH - 30TH POKÉMON STOCK CHECK")
     print("=" * 55)
 
     for product in PRODUCTS:
+
         stock = check_stock(product)
 
         print(
