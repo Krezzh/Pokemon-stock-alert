@@ -2,7 +2,7 @@ name: Pokémon 30th Stock Checker
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -23,29 +23,22 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       - name: Install Playwright
         run: |
           pip install playwright
           playwright install --with-deps chromium
-        
+
       - name: Check Pokémon stock
         env:
-        
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: "8604636004"
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python stock_bot.py
-
-      - name: Check Toyworld regional stock
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: "8604636004"
-        run: python toyworld_region_check.py
 
       - name: Save stock state
         run: |
           git config user.name "pokemon-stock-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add state.json toyworld_state.json
+          git config user.email "41988282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
           git diff --cached --quiet || git commit -m "Update stock state"
           git push
