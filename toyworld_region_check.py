@@ -117,30 +117,65 @@ def check_stock(product):
     except Exception as e:
         print(f"ERROR checking {product['name']}: {e}")
         return None
+    
+response_data = data.get("response", [])
 
-    stores = data.get("response", [])
+# Toyworld returns the store data as JSON text
+if isinstance(response_data, str):
+    try:
+        response_data = json.loads(response_data)
+    except json.JSONDecodeError:
+        print("ERROR: Could not decode Toyworld response")
+        print(response_data[:1000])
+        return 0
 
-    for store in stores:
-        store_code = str(
-            store.get("code")
-            or store.get("gmb_store_code")
-            or ""
-        )
+# The decoded response should be a list of stores
+if isinstance(response_data, dict):
+    stores = response_data.get("stores", [])
+else:
+    stores = response_data
 
-        if store_code != PALMERSTON_NORTH_STORE:
+if not isinstance(stores, list):
+    print("ERROR: Unexpected Toyworld response format")
+    print(type(stores))
+    return 0
+
+for store in stores:
+
+    if isinstance(store, str):
+        try:
+            store = json.loads(store)
+        except json.JSONDecodeError:
             continue
 
-        stock_raw = store.get("stock", "0")
+    if not isinstance(store, dict):
+        continue
 
-        try:
-            stock = int(float(stock_raw))
-        except (TypeError, ValueError):
-            stock = 0
+    store_code = str(
+        store.get("code")
+        or store.get("gmb_store_code")
+        or ""
+    )
 
-        print(f"Store: {store.get('store_name', 'Toyworld Palmerston North')}")
-        print(f"Stock reported: {stock}")
+    if store_code != PALMERSTON_NORTH_STORE:
+        continue
 
-        return stock
+    stock_raw = store.get("stock", "0")
+
+    try:
+        stock = int(float(stock_raw))
+    except (TypeError, ValueError):
+        stock = 0
+
+    print(
+        f"Store: {store.get('store_name', 'Toyworld Palmerston North')}"
+    )
+    print(f"Stock reported: {stock}")
+
+    return stock
+
+print("Toyworld Palmerston North was not found in the response.")
+return 0
 
     print("Palmerston North store was not found in the response.")
     return None
